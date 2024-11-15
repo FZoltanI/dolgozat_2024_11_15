@@ -57,7 +57,7 @@
 
         <tbody>
             @foreach ($rentals as $rent)
-                <tr>
+                <tr>  
                     <td>{{$rent->film->title}}</td>
                     <td>{{$rent->film->director}}</td>
                     <td>{{$rent->film->genre->name}}</td>
