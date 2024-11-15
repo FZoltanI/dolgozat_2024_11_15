@@ -11,6 +11,16 @@
     </style>
 </head>
 <body>
+    @if (session('success'))
+        <p>Siker: {{ session('success') }}</p>
+    @endif
+
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <p>Hiba: {{ $error }}</p>
+        @endforeach
+    @endif
+
     <h1>Kölcsönözhető filmek</h1>
 
     <form method="GET">
@@ -45,8 +55,9 @@
                             <input type="submit" value="Kölcsönzés">
                         </form>
 
-                        <form action="">
+                        <form method="POST" action="{{route("delete_film", $film->id)}}">
                             @csrf
+                            @method("DELETE")
                             <input type="submit" value="Törlés">
                         </form>
                     </td>

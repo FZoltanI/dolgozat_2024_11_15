@@ -84,8 +84,15 @@ class FilmController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Film $film)
+    public function destroy($id)
     {
-        //
+        $film = Film::find($id);
+        
+        if ($film->delete()){
+            return redirect()->route("index_film")->with("success","Sikeres törlés!");
+        } else {
+            return redirect()->route("index_film")->with("error","Hiba a törlés közben!");
+        }
+
     }
 }
