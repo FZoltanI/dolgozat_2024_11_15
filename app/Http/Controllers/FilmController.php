@@ -14,7 +14,14 @@ class FilmController extends Controller
      */
     public function index(Request $request)
     {
-        return view("film/index", ["films" => Film::all()]);
+        $films = null;
+        if ($request->has("title")){
+            $films = Film::where("title", "LIKE", "%" . $request->title . "%")->get();
+        } else {
+            $films = Film::all();
+        }
+
+        return view("film/index", compact("films"));
     }
 
     /**

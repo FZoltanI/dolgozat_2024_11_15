@@ -13,6 +13,16 @@
 <body>
     <h1>Kölcsönözhető filmek</h1>
 
+    <form method="POST">
+        @csrf
+        <h2>Szűrés:</h2>
+        <input type="text" name = "title" placeholder="Film címe">
+        <input type="submit" value="Szűrés">
+    </form>
+
+    <br>
+    <br>
+
     <table>
         <thead>
             <th>Film címe</th>
