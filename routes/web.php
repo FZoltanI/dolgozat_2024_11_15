@@ -22,3 +22,5 @@ Route::post('/films/{id}', [RentController::class,'store'])->name('create_rent')
 
 Route::get('/rented', [RentController::class,'index1'])->name('index_rented');
 Route::put('/rented', [RentController::class,'update'])->name('rented_back');
+
+Route::get('/rentals', [RentController::class,'index2'])->name('index_rentals');

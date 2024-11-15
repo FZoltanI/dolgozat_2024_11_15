@@ -16,6 +16,11 @@ class RentController extends Controller
         return view("rent/rented", ["rented" => Rent::whereNull("rent_end")->get()]);
     }
 
+    public function index2(Request $request)
+    {
+        return view("rent/rentals", ["rentals" => Rent::all()]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
