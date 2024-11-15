@@ -16,9 +16,15 @@ class FilmController extends Controller
     {
         $films = null;
         if ($request->has("title")){
-            $films = Film::where("title", "LIKE", "%" . $request->title . "%")->get();
+            $films = Film::where("title", "LIKE", "%" . $request->title . "%")
+            ->whereDoesntHave('rents', function ($query){
+                $query->whereNull("rent_end");
+            })
+            ->get();
         } else {
-            $films = Film::all();
+            $films = Film::whereDoesntHave('rents', function ($query){
+                $query->whereNull("rent_end");
+            })->get();
         }
 
         return view("film/index", compact("films"));
