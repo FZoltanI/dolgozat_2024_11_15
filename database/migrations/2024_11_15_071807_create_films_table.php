@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string("title");
+            $table->string("director");
+            $table->integer("year");
+            $table->foreignId(column: 'genre_id')->references('id')->on('genres');
             $table->softDeletes();
         });
     }

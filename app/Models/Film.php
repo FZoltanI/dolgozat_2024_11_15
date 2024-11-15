@@ -11,4 +11,14 @@ class Film extends Model
     /** @use HasFactory<\Database\Factories\FilmFactory> */
     use HasFactory;
     use SoftDeletes;
+
+    protected $fillable = [
+        "title",
+        "director",
+        "year"
+    ];
+
+    public function genre(){
+        return $this->belongsTo(Genre::class, "genre_id");
+    }
 }
