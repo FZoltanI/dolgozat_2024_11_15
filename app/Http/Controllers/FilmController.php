@@ -33,9 +33,21 @@ class FilmController extends Controller
         $validate = $request->validate([
             "title"=> "required",
             "director"=> "required",
-            "year"=> "required|min:1000",
+            "year"=> "required",
             "genre"=> "required|exists:genres,id",
         ]);
+
+        $film = new Film();
+        $film->title = $request->title;
+        $film->year = $request->year;
+        $film->genre_id = $request->genre;
+        $film->director = $request->director;
+
+        if ($film->save()) {
+            return redirect()->back()->with("success","Sikeresen rögzítetted a filmet!");
+        } else {
+            return redirect()->back()->with("error","Sikertelen rögzítés!");
+        }
     }
 
     /**
