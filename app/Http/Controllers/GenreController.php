@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Genre;
-use App\Http\Requests\StoreGenreRequest;
-use App\Http\Requests\UpdateGenreRequest;
+use Illuminate\Http\Request;
 
 class GenreController extends Controller
 {
@@ -27,9 +26,20 @@ class GenreController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreGenreRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            "genre"=> "required",
+        ]);
+
+        $genre = new Genre();
+        $genre->name = $request->genre;
+
+        if ($genre->save()) {
+            return redirect()->back()->with("success","Sikeres rögzítés!");
+        } else {
+            return redirect()->back()->with("error","Hiba lépett fel!");
+        }
     }
 
     /**

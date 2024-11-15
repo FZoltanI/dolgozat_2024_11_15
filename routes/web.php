@@ -8,3 +8,4 @@ Route::get('/', function () {
 });
 
 Route::get('/new-genre', [GenreController::class,'create'])->name('create_genre');
+Route::post('/new-genre', [GenreController::class,'store'])->name('store_genre');
