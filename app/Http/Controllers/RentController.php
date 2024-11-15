@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rent;
+use App\Models\Genre;
 use Illuminate\Http\Request;
 
 
@@ -18,7 +19,30 @@ class RentController extends Controller
 
     public function index2(Request $request)
     {
-        return view("rent/rentals", ["rentals" => Rent::all()]);
+        $genres = Genre::all();
+        $rentals = null;
+        
+        if ($request->has("filter")){
+            $filter_title= $request->title;
+            $filter_genre= $request->genre;
+
+            $rentals = Rent::where("name", "LIKE", "%" . $request->name . "%")
+                ->where("rent_start", "LIKE", $request->rent_start)
+                ->where("rent_end", "LIKE", $request->rent_end)
+                ->whereHas("film", function ($query){
+                    GLOBAL $filter_title;
+                    $query->where("title", "LIKE", "%" . $filter_title . "%");
+                })
+                ->whereHas("film", function ($query){
+                    GLOBAL $filter_genre;
+                    $query->where("genre_id", "LIKE", $filter_genre);
+                })
+                ->get();
+        } else {
+            $rentals = Rent::all();
+        }
+
+        return view("rent/rentals", compact("rentals", "genres"));
     }
 
     /**

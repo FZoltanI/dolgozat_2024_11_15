@@ -28,14 +28,18 @@
 
     <h1>Kölcsönzések</h1>
 
-    <form action="GET" style="border: 1px solid black; display: inline-block; padding: 5px;">
+    <form method="GET" style="border: 1px solid black; display: inline-block; padding: 5px;">
         <h3>Szűrés</h3>
         Filcím: <input type="text" name="title"><br>
         Kölcsönző neve: <input type="text" name="name"><br>
-        Műfaj: <input type="text" name="genre"><br>
+        Műfaj: <select name="genre">
+            @foreach ($genres as $genre)
+                <option value="{{$genre->id}}">{{$genre->name}}</option>
+            @endforeach
+        </select><br>
         Kölcsönzés kezdete: <input type="date" name="rent_start"><br>
         Kölcsönzés vége: <input type="date" name="rent_end"><br>
-        <input type="submit" value="Szűrés">
+        <input type="submit" value="Szűrés" name = "filter">
     </form>
 
     <br>
