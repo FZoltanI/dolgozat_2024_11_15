@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Film;
-use App\Http\Requests\StoreFilmRequest;
-use App\Http\Requests\UpdateFilmRequest;
+use App\Models\Genre;
+use Illuminate\Http\Request;
+
 
 class FilmController extends Controller
 {
@@ -21,15 +22,20 @@ class FilmController extends Controller
      */
     public function create()
     {
-        //
+        return view("film/create", ["genres" => Genre::all()]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreFilmRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            "title"=> "required",
+            "director"=> "required",
+            "year"=> "required|min:1000",
+            "genre"=> "required|exists:genres,id",
+        ]);
     }
 
     /**
