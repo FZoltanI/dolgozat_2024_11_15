@@ -19,3 +19,6 @@ Route::get('/films', [FilmController::class,'index'])->name('index_film');
 Route::get('/films/{id}', [FilmController::class,'show'])->name('show_film');
 Route::delete('/films/{id}', [FilmController::class,'destroy'])->name('delete_film');
 Route::post('/films/{id}', [RentController::class,'store'])->name('create_rent');
+
+Route::get('/rented', [RentController::class,'index1'])->name('index_rented');
+Route::put('/rented', [RentController::class,'update'])->name('rented_back');

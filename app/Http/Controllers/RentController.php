@@ -11,9 +11,9 @@ class RentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index1()
     {
-        //
+        return view("rent/rented", ["rented" => Rent::whereNull("rent_end")->get()]);
     }
 
     /**
@@ -66,9 +66,26 @@ class RentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRentRequest $request, Rent $rent)
+    public function update(Request $request)
     {
-        //
+        $validate = $request->validate([
+            "rent_id"=> "required|exists:rents,id",
+            "rent_end"=> "required",
+        ]);
+
+        $rent = Rent::find( $request->rent_id );
+
+        if ($rent->rent_start <= $request->rent_end){
+            $rent->rent_end = $request->rent_end;
+
+            if ($rent->save()){
+                return redirect()->route("index_rented")->with("success","Sikeres rögzítés!");
+            } else {
+                return redirect()->route("index_rented")->with("error","Hiba lépett fel!");
+            }
+        } else {
+            return redirect()->route("index_rented")->with("error","Nem lehet a visszahozatal dátuma korábban mint a kölcsönzés!");
+        }
     }
 
     /**
