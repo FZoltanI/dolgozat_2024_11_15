@@ -50,7 +50,7 @@
                     <td>{{$film->year}}</td>
                     <td>{{$film->genre->name}}</td>
                     <td>
-                        <form action="">
+                        <form method="GET" action="{{route("show_film", $film->id)}}">
                             @csrf
                             <input type="submit" value="Kölcsönzés">
                         </form>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\RentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,4 +16,6 @@ Route::get('/new-film', [FilmController::class,'create'])->name('create_film');
 Route::post('/new-film', [FilmController::class,'store'])->name('store_film');
 
 Route::get('/films', [FilmController::class,'index'])->name('index_film');
+Route::get('/films/{id}', [FilmController::class,'show'])->name('show_film');
 Route::delete('/films/{id}', [FilmController::class,'destroy'])->name('delete_film');
+Route::post('/films/{id}', [RentController::class,'store'])->name('create_rent');

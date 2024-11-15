@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rent;
-use App\Http\Requests\StoreRentRequest;
-use App\Http\Requests\UpdateRentRequest;
+use Illuminate\Http\Request;
+
 
 class RentController extends Controller
 {
@@ -27,9 +27,24 @@ class RentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRentRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            "film_id"=> "required|exists:films,id",
+            "kolcsonzo"=> "required",
+            "kolcsonzes"=> "required",
+        ]);
+
+        $rent = new Rent();
+        $rent->name = $request->kolcsonzo;
+        $rent->film_id = $request->film_id;
+        $rent->rent_start = $request->kolcsonzes;
+
+        if ($rent->save()){
+            return redirect()->route("index_film")->with("success","Sikeres kölcsönzés");
+        } else {
+            return redirect()->back()->with("error","Hiba a kölcsönzés közben!");
+        }
     }
 
     /**
